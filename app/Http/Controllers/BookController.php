@@ -25,7 +25,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         // Validasi data, memastikan kode buku unik (tidak boleh sama)
-        $request->validate([
+        $validated = $request->validate([
             'kode_buku' => 'required|unique:books,kode_buku',
             'judul_buku' => 'required|string|max:255',
             'penulis' => 'required|string|max:255',
@@ -35,9 +35,8 @@ class BookController extends Controller
             'stok_buku' => 'required|integer|min:0',
         ]);
 
-        Book::create($request->validated());
-
-        return redirect()->route('books.index')->with('success', 'Data buku berhasil ditambahkan!');
+        Book::create($validated);
+        return redirect()->route('books.index');
     }
 
     public function edit(Book $book)
