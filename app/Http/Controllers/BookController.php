@@ -41,9 +41,11 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
+        // Mengambil kategori untuk pilihan di dropdown form
         $categories = Category::all();
+        // Mengirim data buku dan kategori ke view edit
         return view('books.edit', compact('book', 'categories'));
-    }
+    }   
 
     public function show(string $id)
     {
@@ -52,8 +54,7 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-        // Validasi kode buku unik, tapi abaikan kode buku milik buku yang sedang diedit ini
-        $request->validate([
+        $validate = $request->validate([
             'kode_buku' => 'required|unique:books,kode_buku,' . $book->id,
             'judul_buku' => 'required|string|max:255',
             'penulis' => 'required|string|max:255',
@@ -63,14 +64,16 @@ class BookController extends Controller
             'stok_buku' => 'required|integer|min:0',
         ]);
 
-        $book->update($request->validated());
+        $book->update($validate);
 
         return redirect()->route('books.index')->with('success', 'Data buku berhasil diperbarui!');
     }
 
     public function destroy(Book $book)
     {
+        // Menghapus buku dari database
         $book->delete();
+        
         return redirect()->route('books.index')->with('success', 'Data buku berhasil dihapus!');
     }
 }
