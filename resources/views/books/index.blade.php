@@ -9,7 +9,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead>
                         <tr>
                             <th>Kode</th>
@@ -17,7 +17,7 @@
                             <th>Kategori</th>
                             <th>Penulis</th>
                             <th>Stok</th>
-                            <th>Aksi</th>
+                            <th style="width: 150px; text-align: center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,13 @@
                                 <td>{{ $book->stok_buku }}</td>
                                 <td>
                                     {{-- Tombol button edit --}}
-                                    <button class="btn btn-warning btn-sm">Edit</button>
+                                    <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                                    <form action="{{ route('books.destroy', $book->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
