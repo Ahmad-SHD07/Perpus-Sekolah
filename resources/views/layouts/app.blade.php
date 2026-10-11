@@ -37,6 +37,9 @@
                         <li class="nav-item">
                             <a href="{{ route('books.index') }}" class="nav-link">Data Buku</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('categories.index') }}" class="nav-link">Kategori Buku</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
